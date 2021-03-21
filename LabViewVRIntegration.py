@@ -17,7 +17,6 @@ class vrTest(ShowBase):
         properties.setSize(1000, 750)
         self.win.requestProperties(properties)
 
-        self.setFrameRateMeter(True) #fps meter, disable during experiment
         self.disableMouse() #disables mouse camera movement
 
         #load environment model
@@ -33,7 +32,7 @@ class vrTest(ShowBase):
         self.TV1.reparentTo(render)
         self.TV1.setTexture(self.tex1, 1)
         self.TV1.setH(180)
-        self.TV1.setPos(0, 20.3, 0) #20.3 is end of forward tunnel
+        self.TV1.setPos(0, 1, 0) #20.3 is end of forward tunnel
 
         # Set collision rules
         self.cTrav = CollisionTraverser()
@@ -71,8 +70,6 @@ class vrTest(ShowBase):
         #event listeners for keyboard inputs
         self.accept("w", self.updateKeyMap, ["up", True])
         self.accept("w-up", self.updateKeyMap, ["up", False])
-        self.accept("s", self.updateKeyMap, ["down", True])
-        self.accept("s-up", self.updateKeyMap, ["down", False])
         self.accept("a", self.updateKeyMap, ["left", True])
         self.accept("a-up", self.updateKeyMap, ["left", False])
         self.accept("d", self.updateKeyMap, ["right", True])
@@ -84,25 +81,25 @@ class vrTest(ShowBase):
     #updates control state based on event listeners
     def updateKeyMap(self, controlName, controlState):
         self.keyMap[controlName] = controlState
-        #print (controlName, "set to", controlState) #console output of key presses for debugging
+        print (controlName, "set to", controlState) #console output of key presses for debugging
 
     #camera movement method, would be replaced with LabView integration
     def update(self, task):
         # Get the amount of time since the last update
         dt = globalClock.getDt()
         velocity = 5 #coefficient for camera movement speed
+        yaw = 1;
         angleDegrees = velocity*dt
         # applies camera inputs to camera position
         if self.keyMap["up"]:
             self.camera.setPos(self.camera.getPos() + render.getRelativeVector(self.camera, Vec3.forward())/velocity)
-        if self.keyMap["down"]:
-            self.camera.setPos(self.camera.getPos() - render.getRelativeVector(self.camera, Vec3.forward())/velocity)
         if self.keyMap["left"]:
             self.camera.setPos(self.camera.getPos() + Vec3(-1 * velocity * dt, 0, 0))
-            self.camera.setH(self.camera.getH() + 1)
+            self.camera.setH(self.camera.getH() + yaw)
         if self.keyMap["right"]:
             self.camera.setPos(self.camera.getPos() + Vec3(velocity * dt, 0, 0))
-            self.camera.setH(self.camera.getH() - 1)
+            self.camera.setH(self.camera.getH() - yaw)
+        print(self.camera.getPos())
         return task.cont
 app = vrTest() #creates instance of program class
 app.run() #runs program class
