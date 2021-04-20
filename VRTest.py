@@ -104,5 +104,3 @@ class vrTest(ShowBase):
             self.camera.setPos(self.camera.getPos() + Vec3(velocity * dt, 0, 0))
             self.camera.setH(self.camera.getH() - 1)
         return task.cont
-app = vrTest() #creates instance of program class
-app.run() #runs program class
