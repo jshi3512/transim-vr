@@ -4,6 +4,7 @@ import sys,argparse
 import math, pygame
 from VRTest import vrTest
 from circles import OscillatingCircle
+from display import Display
 
 def main():
     parser = argparse.ArgumentParser(description='Choose which test to run.')
@@ -13,19 +14,33 @@ def main():
     args = parser.parse_args()
 
     if args.oscillating:
-        print(args.oscillating)
-        display = pygame.display.set_mode((1570, 800), flags=pygame.DOUBLEBUF)
-        display.fill((0, 0, 0))
-        osc = OscillatingCircle(display, (0, 255, 0), 785, 400, 400, 1)
-        osc.display_circle()
-        exit(0)
+        running = True
+        ticks = 0
+
+        display = Display(1570, 800, (0, 0, 0))
+        osc = OscillatingCircle(display.get_display(), (0, 255, 0), display.get_width() / 2, display.get_height() / 2,
+                                display.get_height() / 2, 1)
+
+        while running:
+            ticks = ticks + 1
+
+            display.update_display()
+            osc.display_circle(ticks)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+            pygame.display.flip()
+            display.get_clock().tick(60)
+
     elif args.dots:
         print("Start dots.")
-        exit(0)
+
     elif args.virtual:
         app = vrTest()  # creates instance of program class
         app.run()  # runs program class
-        exit(0)
+
 
 if __name__ == "__main__":
     main()

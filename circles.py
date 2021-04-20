@@ -12,5 +12,6 @@ class OscillatingCircle():
         self.max_radius = max_radius
         self.freq = freq
 
-    def display_circle(self):
-        pygame.draw.circle(self.display, self.color, (self.x, self.y), self.max_radius, width=1)
+    def display_circle(self, ticks):
+        pygame.draw.circle(self.display, self.color, (self.x, self.y), self.max_radius*(math.sin(self.freq*math.pi*ticks/30)+1)/2, width=1)
+

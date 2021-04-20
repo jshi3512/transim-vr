@@ -31,5 +31,3 @@ while running:
 
     # Flip the display
     pygame.display.flip()
-    clock.tick()
-    print("fps: ", clock.get_fps())
