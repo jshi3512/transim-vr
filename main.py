@@ -1,10 +1,11 @@
 #This the main program file for TranSIM VR experimentation
 
-import sys,argparse
+import sys,argparse, time
 import math, pygame
 from VRTest import vrTest
 from circles import OscillatingCircle
 from display import Display
+from movingDots import MovingDots
 
 def main():
     parser = argparse.ArgumentParser(description='Choose which test to run.')
@@ -14,28 +15,16 @@ def main():
     args = parser.parse_args()
 
     if args.oscillating:
-        running = True
-        ticks = 0
-
+        fps = 60
         display = Display(1570, 800, (0, 0, 0))
         osc = OscillatingCircle(display.get_display(), (0, 255, 0), display.get_width() / 2, display.get_height() / 2,
-                                display.get_height() / 2, 1)
-
-        while running:
-            ticks = ticks + 1
-
-            display.update_display()
-            osc.display_circle(ticks)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-
-            pygame.display.flip()
-            display.get_clock().tick(60)
+                                display.get_height() / 2, 1, fps)
+        display.run_oscillating(osc, fps)
 
     elif args.dots:
-        print("Start dots.")
+        display = Display(1570, 800, (0, 0, 0))
+        dots = MovingDots(display.get_display(), (0, 255, 0), display.get_width(), display.get_height()/2, 20)
+        display.run_dots(dots)
 
     elif args.virtual:
         app = vrTest()  # creates instance of program class
