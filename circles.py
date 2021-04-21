@@ -14,5 +14,5 @@ class OscillatingCircle():
         self.fps = fps
 
     def display_circle(self, ticks):
-        pygame.draw.circle(self.display, self.color, (self.x, self.y), self.max_radius*(math.sin(self.freq*math.pi*ticks/(self.fps/2))+1)/2, width=1)
+        pygame.draw.circle(self.display, self.color, (self.x, self.y), self.max_radius*(math.sin(self.freq*math.pi*ticks/(self.fps/2))+1)/2, width=0)
 

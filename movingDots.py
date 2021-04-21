@@ -10,6 +10,7 @@ class MovingDots():
         self.y = y
         self.radius = radius
 
+    #draws circle to screen
     def display_circle(self):
         pygame.draw.circle(self.display, self.color, (random.randint(0,self.width), self.y), self.radius)
 

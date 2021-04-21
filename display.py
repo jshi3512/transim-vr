@@ -6,8 +6,8 @@ class Display():
         self.width = width
         self.height = height
         self.bgrd = bgrd
-        pygame.init()
-        self.display = pygame.display.set_mode((self.width, self.height), flags=pygame.DOUBLEBUF)
+        pygame.init() #initialize pygame, creates display instance
+        self.display = pygame.display.set_mode((self.width, self.height), flags=pygame.DOUBLEBUF) #DOUBLEBUF used for hardware rendering
         self.clock = pygame.time.Clock()
 
     def run_oscillating(self, osc, fps):
